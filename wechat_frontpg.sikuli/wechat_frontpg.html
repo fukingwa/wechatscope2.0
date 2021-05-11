@@ -1,0 +1,356 @@
+
+<html>
+   <head>
+      <style type="text/css">
+         .sikuli-code {
+            font-size: 20px;
+            font-family: "Osaka-mono", Monospace;
+            line-height: 1.5em;
+            display:table-cell;
+            white-space: pre-wrap;       /* css-3 */
+            white-space: -moz-pre-wrap !important;  /* Mozilla, since 1999 */
+            white-space: -pre-wrap;      /* Opera 4-6 */
+            white-space: -o-pre-wrap;    /* Opera 7 */
+            word-wrap: break-word;       /* Internet Explorer 5.5+ */
+            width: 99%;   /* remove horizontal scroll-bar when viewing in IE7 */
+         }
+         .sikuli-code img {
+            vertical-align: middle;
+            margin: 2px;
+            border: 1px solid #ccc;
+            padding: 2px;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-box-shadow: 1px 1px 1px gray;
+            -webkit-box-shadow: 1px 1px 2px gray;
+         }
+         .kw {
+            color: blue;
+         }
+         .skw {
+            color: rgb(63, 127, 127);
+         }
+
+         .str {
+            color: rgb(128, 0, 0);
+         }
+
+         .dig {
+            color: rgb(128, 64, 0);
+         }
+
+         .cmt {
+            color: rgb(200, 0, 200);
+         }
+
+         h2 {
+            display: inline;
+            font-weight: normal;
+         }
+
+         .info {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+            display: none;
+         }
+
+         a {
+            color: #9D2900;
+         }
+
+         body {
+            font-family: "Trebuchet MS", Arial, Sans-Serif;
+         }
+
+      </style>
+   </head>
+<body>
+<div class="info">
+<h2>wechat_frontpg.sikuli</h2> <a href="wechat_frontpg.zip">(Download this script)</a>
+</div>
+<pre class="sikuli-code">
+<span class="kw">import</span> time
+<span class="kw">import</span> json
+<span class="kw">import</span> shutil
+<span class="kw">import</span> re
+<span class="kw">import</span> csv
+<span class="kw">import</span> random
+<span class="kw">import</span> datetime
+
+<span class="kw">from</span> os <span class="kw">import</span> listdir
+<span class="kw">from</span> os.path <span class="kw">import</span> isfile, join
+<span class="kw">from</span> random <span class="kw">import</span> randint
+<span class="kw">from</span> time <span class="kw">import</span> <span class="skw">sleep</span>
+<span class="kw">from</span> datetime <span class="kw">import</span> datetime
+
+<span class="cmt">### PATH</span>
+
+working_dir = <span class="str">r"E:/Wechat/"</span>
+RScript_dir = <span class="str">r"C:/Program Files/R/R-3.4.3/bin/Rscript"</span>
+Wechatexe_dir = <span class="str">r"C:/Program Files (x86)/Tencent/WeChat/WeChat.exe"</span>
+
+Notepad_dir = <span class="str">r"C:/Program Files/Notepad++/notepad++.exe"</span>
+list_name = <span class="str">r"list_kwfu.csv"</span>
+default_delay = <span class="dig">5</span>
+
+<span class="cmt">###</span>
+
+<span class="kw">def</span> init1(init):
+    <span class="kw">if</span> init == <span class="dig">0</span>:
+        <span class="skw">type</span>(Key.ESC)
+    time.<span class="skw">sleep</span>(default_delay + randint(<span class="dig">10</span>,<span class="dig">5000</span>) / float(<span class="dig">1000</span>))
+    <span class="kw">if</span> <span class="kw">not</span> exists(<img src="1502244734523.png" />):
+        <span class="skw">type</span>(Key.ESC)
+    <span class="skw">wait</span>(<img src="1502244734523.png" />,<span class="dig">1000</span>)
+    <span class="skw">click</span>(<img src="1502244734523.png" />)
+    m = <span class="skw">find</span>(<img src="1502244734523.png" />)
+    time.<span class="skw">sleep</span>(default_delay + randint(<span class="dig">10</span>,<span class="dig">5000</span>) / float(<span class="dig">1000</span>))
+    mouseMove(Location(m.getX() + <span class="dig">250</span>, m.getY()))  <span class="cmt"># Move to page list region</span>
+    <span class="kw">for</span> i <span class="kw">in</span> range(<span class="dig">5</span>):
+        wheel(Env.getMouseLocation(), WHEEL_UP, <span class="dig">200</span>)
+        time.<span class="skw">sleep</span>(<span class="dig">5</span>)
+
+<span class="kw">def</span> by_y(match):
+    <span class="kw">return</span> match.y
+
+<span class="kw">def</span> process_link():
+    time.<span class="skw">sleep</span>(default_delay + randint(<span class="dig">10</span>,<span class="dig">5000</span>) / float(<span class="dig">500</span>))
+    <span class="skw">wait</span>(Pattern(<img src="1507777341776.png" />),<span class="dig">1000</span>)
+    rf=Region(App.focusedWindow()).<span class="skw">find</span>(<img src="1507777341776.png" />)
+<span class="cmt">#    click(rf)</span>
+<span class="cmt">#    wait(2)</span>
+    <span class="skw">click</span>(rf)
+    <span class="skw">wait</span>(<span class="dig">5</span>)
+<span class="cmt">#    wait(Pattern("1545394938561.png"),1000)</span>
+<span class="cmt">#    click("1545394938561.png")</span>
+    <span class="skw">wait</span>(Pattern(<img src="1566629199575.png" />),<span class="dig">1000</span>)
+    <span class="skw">click</span>(<img src="1566629199575.png" />)
+    time.<span class="skw">sleep</span>(default_delay + randint(<span class="dig">10</span>,<span class="dig">5000</span>) / float(<span class="dig">500</span>))
+    p_link = Env.getClipboard()
+    <span class="kw">if</span> p_link.<span class="skw">find</span>(<span class="str">"mp.weixin.qq.com/s/"</span>) == -<span class="dig">1</span>:
+        <span class="kw">print</span>(<span class="str">"badurl:"</span>, p_link)
+        <span class="kw">return</span>
+    <span class="kw">else</span>:
+        p_str_id = re.sub(<span class="str">"http[s]?://mp.weixin.qq.com/s/"</span>,<span class="str">""</span>,p_link)
+        p_current_time = time.strftime(<span class="str">"%Y%m%d-%H%M%S"</span>)
+        p_bb = {<span class="str">'link'</span>: p_link, <span class="str">'created_time'</span>: p_current_time}
+        p_bb = json.dumps(json.dumps(p_bb))
+        cmd = RScript_dir + <span class="str">" -e \"source('"</span> + working_dir + <span class="str">"rredis.r')\" "</span> + p_bb
+        cmd = cmd.replace(<span class="str">'\\"'</span>,<span class="str">"'"</span>)
+        run(cmd)
+        <span class="kw">print</span>(cmd)
+        page = Region(App.focusedWindow())
+        <span class="kw">if</span> page.exists(<img src="1567756715598.png" />):
+            m=page.<span class="skw">find</span>(<img src="1567756715598.png" />)
+<span class="cmt">#        if page.exists("1546590365280.png"):</span>
+<span class="cmt">#            m=page.find("1546590365280.png")</span>
+<span class="cmt">#        if page.exists("1526721574399.png"):</span>
+<span class="cmt">#            m=page.find("1526721574399.png")</span>
+<span class="cmt">#        if page.exists("1515120776441.png"):</span>
+<span class="cmt">#            m=page.find("1515120776441.png")    </span>
+            <span class="skw">click</span>(m)
+        save_page(p_str_id)
+        <span class="skw">wait</span>(Pattern(<img src="1502327431060-2.png" />),<span class="dig">1000</span>)
+        bk=Region(App.focusedWindow()).<span class="skw">find</span>(<img src="1502327431060-2.png" />)
+        <span class="skw">click</span>(bk)
+
+<span class="kw">def</span> app_crawler_npr(a,b,getpage=True):
+    <span class="kw">def</span> by_y(match):
+        <span class="kw">return</span> match.y
+    a = a.rstrip(<span class="str">'\n\r '</span>)
+    <span class="kw">if</span> exists(<img src="1502697801829.png" />):
+        m = <span class="skw">find</span>(<img src="1502697801829.png" />)
+        <span class="skw">click</span>(<img src="1502697801829.png" />)
+        time.<span class="skw">sleep</span>(default_delay + randint(<span class="dig">10</span>,<span class="dig">5000</span>) / float(<span class="dig">1000</span>))
+        <span class="skw">type</span>(a)
+        <span class="skw">wait</span>(<span class="dig">2</span>)
+        <span class="skw">click</span>(Location(m.getX(), m.getY() + <span class="dig">80</span>))  <span class="cmt"># click the 1st icon ("a")</span>
+        <span class="skw">wait</span>(<span class="dig">2</span>)
+        <span class="skw">wait</span>(<img src="1502245510769.png" />,<span class="dig">1000</span>)
+        <span class="skw">click</span>(<img src="1502245510769.png" />)
+        time.<span class="skw">sleep</span>(default_delay + randint(<span class="dig">10</span>,<span class="dig">5000</span>) / float(<span class="dig">1000</span>))
+        <span class="skw">wait</span>(<img src="1502245600443.png" />,<span class="dig">1000</span>)
+        <span class="skw">click</span>(<img src="1502245600443.png" />)
+        time.<span class="skw">sleep</span>(default_delay + randint(<span class="dig">10</span>,<span class="dig">5000</span>) / float(<span class="dig">1000</span>))
+        current_time = time.strftime(<span class="str">"%Y%m%d-%H%M%S"</span>)
+        wp_name = a + <span class="str">'_'</span> + current_time
+        <span class="kw">if</span> getpage:
+            save_page(wp_name,True)
+<span class="cmt">#    buffer = []</span>
+        <span class="kw">for</span> j <span class="kw">in</span> range(<span class="dig">1</span>):
+            <span class="kw">if</span> exists(<img src="1502705393453.png" />):
+                <span class="kw">break</span>
+        <span class="kw">if</span> exists(<img src="1567756715598.png" />):
+                all_match = Region(App.focusedWindow()).findAll(<img src="1567756715598.png" />)
+                in_order = sorted(all_match, key=by_y) <span class="cmt"># sort the icons by their y coordinates and put them into a new variable sorted_icons</span>
+                page = App.focusedWindow()
+                all_mm = [item <span class="kw">for</span> item <span class="kw">in</span> in_order]
+                i = all_mm[(b-<span class="dig">1</span>)]
+                page.<span class="skw">click</span>(i)
+                process_link()
+
+<span class="kw">def</span> save_page(code, skip=False):
+    <span class="kw">while</span> True:
+        <span class="skw">wait</span>(Pattern(<img src="1507777341776.png" />),<span class="dig">1000</span>)
+        m=Region(App.focusedWindow()).<span class="skw">find</span>(<img src="1507777341776.png" />)
+        <span class="skw">click</span>(m)
+        <span class="skw">wait</span>(<span class="dig">2</span>)
+        <span class="skw">click</span>(m)
+        <span class="skw">wait</span>(<span class="dig">2</span>)
+        <span class="skw">click</span>(Location(m.getX(), m.getY() + <span class="dig">50</span>))  <span class="cmt"># Move to page list region</span>
+        <span class="skw">type</span>(<span class="str">"a"</span>, KEY_CTRL)  <span class="cmt">### Select all</span>
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        <span class="skw">type</span>(<span class="str">"c"</span>, KEY_CTRL)  <span class="cmt">### Copy</span>
+<span class="cmt">#        click(m)        ### Unselect the selected</span>
+        notepp_app = App(Notepad_dir)   <span class="cmt">### Launch Notepad++</span>
+        <span class="skw">wait</span>(<span class="dig">3</span>)
+        notepp_app.open()
+        <span class="skw">wait</span>(<span class="dig">3</span>)
+        App.focus(Notepad_dir)
+        <span class="skw">wait</span>(<span class="dig">3</span>)
+        <span class="skw">type</span>(<span class="str">"n"</span>, KEY_CTRL)  <span class="cmt">### New Page</span>
+        <span class="skw">wait</span>(<span class="dig">2</span>)
+        <span class="skw">type</span> (Key.F1, KeyModifier.SHIFT | KeyModifier.CTRL )   <span class="cmt">### Paste HTML code</span>
+        <span class="skw">wait</span>(<span class="dig">3</span>)
+        <span class="skw">type</span> (Key.F2, KeyModifier.SHIFT | KeyModifier.CTRL )   <span class="cmt">### Save as</span>
+        <span class="skw">wait</span>(<span class="dig">3</span>)
+        fn = code + <span class="str">".htm"</span>
+        <span class="skw">type</span>(fn)  <span class="cmt">### Filename</span>
+        <span class="skw">wait</span>(<span class="dig">2</span>)
+        <span class="skw">type</span>(Key.ENTER)   <span class="cmt">### Enter</span>
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+        <span class="kw">if</span> exists(<img src="1504144134808.png" />):
+            <span class="skw">click</span>(<img src="1504144147988.png" />)
+        <span class="skw">wait</span>(<span class="dig">1</span>)
+<span class="cmt">#        type("w", KEY_CTRL)  ### Close file</span>
+        <span class="skw">type</span>(<span class="str">"w"</span>, KeyModifier.SHIFT | KeyModifier.CTRL) <span class="cmt"># close all files</span>
+        <span class="skw">wait</span>(<span class="dig">2</span>)
+<span class="cmt">#        notepp_app.close()   ### Close application</span>
+<span class="cmt">#        type(Key.F4, KeyModifier.ALT) # close notepp</span>
+        <span class="skw">type</span>(Key.SPACE, KeyModifier.ALT) <span class="cmt"># minimize notepp</span>
+        <span class="skw">type</span>(<span class="str">"n"</span>)
+        <span class="skw">wait</span>(<span class="dig">2</span>)
+        <span class="skw">wait</span>(Pattern(<img src="1507777341776.png" />),<span class="dig">1000</span>)
+        m=Region(App.focusedWindow()).<span class="skw">find</span>(<img src="1507777341776.png" />)
+        <span class="skw">click</span>(m)
+        <span class="skw">wait</span>(<span class="dig">2</span>)
+        <span class="kw">if</span>  skip:
+            fp_fn = working_dir + <span class="str">r"Files/"</span> + fn
+            cmd = RScript_dir + <span class="str">" -e \"source('"</span> + working_dir + <span class="str">"readhtml.r')\" "</span> + fp_fn
+            cmd = cmd.replace(<span class="str">'\\"'</span>,<span class="str">"'"</span>)
+            run(cmd)
+        <span class="kw">break</span>
+
+<span class="kw">def</span> getname():
+    <span class="kw">if</span> exists(<img src="1502245510769-2.png" />):
+        <span class="skw">click</span>(<img src="1502245510769-2.png" />)
+        time.<span class="skw">sleep</span>(<span class="dig">3</span>)
+        wechatid_path = working_dir + <img src="wechatid.png" />
+        name = None
+        <span class="kw">if</span> exists(wechatid_path):
+            m=<span class="skw">find</span>(wechatid_path)
+            <span class="skw">doubleClick</span>(m.getTopRight().below(m.h/<span class="dig">2</span>).right(<span class="dig">10</span>))
+            <span class="skw">type</span>(<span class="str">"c"</span>, KEY_CTRL)
+            name = Env.getClipboard().encode(<span class="str">'utf-8'</span>).strip()
+        <span class="kw">return</span> name
+
+<span class="cmt">## New notificated account</span>
+<span class="kw">def</span> get_notified(num_img):
+    rm = working_dir + num_img
+    red_mark = Pattern(rm).similar(<span class="dig">0.85</span>)
+    <span class="kw">if</span> App != None:
+        page = Region(App.focusedWindow())
+        r = Region(page.getX()+<span class="dig">310</span>, page.getY(), page.getW()-<span class="dig">310</span>, page.getH())
+    <span class="kw">else</span>:
+        <span class="kw">return</span>(None)
+    return_value = None
+    <span class="kw">if</span> r.exists(red_mark):
+        all_match = r.findAll(red_mark)
+        in_order = sorted(all_match, key=by_y) <span class="cmt"># sort the icons by their y coordinates and put them into a new variable sorted_icons</span>
+        all_mm = [item <span class="kw">for</span> item <span class="kw">in</span> reversed(in_order)]
+        <span class="kw">for</span> i <span class="kw">in</span> all_mm:
+            r.<span class="skw">click</span>(i)
+            <span class="kw">break</span>
+        time.<span class="skw">sleep</span>(default_delay + randint(<span class="dig">10</span>,<span class="dig">5000</span>) / float(<span class="dig">1000</span>))
+        current_time = time.strftime(<span class="str">"%Y%m%d-%H%M%S"</span>)
+        return_value = getname()
+        <span class="kw">if</span> exists(<img src="1502327431060-1.png" />):
+            <span class="skw">click</span>(<img src="1502327431060-1.png" />)
+    <span class="kw">return</span>(return_value)
+
+<span class="kw">def</span> check_time():
+    nowTime = datetime.now()
+    startTime = nowTime.replace(hour=<span class="dig">7</span>, minute=<span class="dig">0</span>, second=<span class="dig">0</span>, microsecond=<span class="dig">0</span>)
+    endTime = nowTime.replace(hour=<span class="dig">00</span>, minute=<span class="dig">30</span>, second=<span class="dig">0</span>, microsecond=<span class="dig">0</span>)
+    <span class="kw">if</span> startTime &lt; endTime:
+        <span class="kw">return</span> nowTime &gt;= startTime <span class="kw">and</span> nowTime &lt;= endTime
+    <span class="kw">else</span>: <span class="cmt">#Over midnight</span>
+        <span class="kw">return</span> nowTime &gt;= startTime <span class="kw">or</span> nowTime &lt;= endTime
+
+<span class="kw">def</span> random_scrolling():
+    count = <span class="dig">0</span>
+    m=Env.getMouseLocation()
+    ref = Region(m.getX(),m.getY(),<span class="dig">200</span>,<span class="dig">200</span>)
+    <span class="kw">while</span> <span class="dig">1</span>:
+        wheel(Env.getMouseLocation(), WHEEL_DOWN, <span class="dig">3</span>)
+        m=Env.getMouseLocation()
+        img = <span class="skw">capture</span>(Region(m.getX(),m.getY(),<span class="dig">200</span>,<span class="dig">200</span>))
+        <span class="kw">if</span> ref.exists(Pattern(img).similar(<span class="dig">0.9</span>)):
+            <span class="kw">break</span>
+        ref = Region(m.getX(),m.getY(),<span class="dig">200</span>,<span class="dig">200</span>)
+        count = count + <span class="dig">1</span>
+    <span class="kw">return</span>(count)
+
+<span class="kw">def</span> pick_a_name(tc):
+    <span class="kw">for</span> i <span class="kw">in</span> range(randint(<span class="dig">1</span>,tc)):
+        wheel(Env.getMouseLocation(), WHEEL_DOWN, <span class="dig">3</span>)
+    time.<span class="skw">sleep</span>(<span class="dig">3</span>)
+    m = Env.getMouseLocation()
+    <span class="skw">click</span>(Location(m.getX()+<span class="dig">150</span>,m.getY()+randint(<span class="dig">10</span>,<span class="dig">50</span>)))
+    random_name = getname()
+<span class="cmt">#    print(random_name)</span>
+    <span class="kw">if</span> exists(<img src="1502327431060-3.png" />):
+        <span class="skw">click</span>(<img src="1502327431060-3.png" />)
+    <span class="kw">return</span>(random_name)
+
+
+<span class="cmt">## Main Part</span>
+sim_th = <span class="dig">0.9</span>
+random.seed(datetime.now())
+notepp_app = App(Notepad_dir)
+notepp_app.open()
+<span class="skw">wait</span>(<span class="dig">5</span>)
+notepp_app.focus()
+<span class="skw">type</span>(Key.SPACE, KeyModifier.ALT)
+<span class="skw">type</span>(<span class="str">"n"</span>)
+<span class="skw">wait</span>(<span class="dig">3</span>)
+wechat_app = App(Wechatexe_dir)
+wechat_app.open()
+wechat_app.focus()
+init1(<span class="dig">1</span>)
+page = App.focusedWindow()
+all_num = [<img src=r"1a.png" />,<img src=r"2a.png" />,<img src=r"3a.png" />]
+<span class="kw">while</span> <span class="dig">1</span>:
+    <span class="kw">while</span> check_time():
+<span class="cmt">#    while 1:</span>
+        now1 = datetime.now()
+        <span class="kw">for</span> num_img <span class="kw">in</span> all_num:
+            red_dot = get_notified(num_img)
+            <span class="kw">if</span> red_dot <span class="kw">is</span> <span class="kw">not</span> None:
+                <span class="kw">try</span>:
+                    app_crawler_npr(red_dot,<span class="dig">1</span>)
+                <span class="kw">except</span>:
+                    <span class="kw">print</span>(<span class="str">"Error at app_crawler_npr"</span>)
+                init1(<span class="dig">0</span>)
+        now2 = datetime.now()
+        <span class="kw">if</span> (now2.hour != now1.hour):
+           init1(<span class="dig">1</span>)
+<span class="cmt">#                rname = pick_a_name(total_count) # Pick an account randomly</span>
+<span class="cmt">#                if rname is not None: </span>
+<span class="cmt">#                    app_crawler_npr(rname,1) </span>
+<span class="cmt">#                init1(0)</span>
+    time.<span class="skw">sleep</span>(<span class="dig">600</span>)
+</pre>
+</body>
+</html>

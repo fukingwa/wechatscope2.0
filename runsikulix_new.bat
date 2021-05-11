@@ -1,0 +1,1 @@
+java -jar sikulixapi-2.0.5-win.jar -r E:\Wechat\wechat_frontpg.sikuli >C:\Users\fukingwa\Desktop\log
