@@ -111,7 +111,7 @@ def app_crawler_npr(a,b,getpage=True):
         type("c", KEY_CTRL)
         name = Env.getClipboard().encode('utf-8').strip()
     time.sleep(2)
-    wait(Pattern("1502245600443.png").similar(0.83),1000)
+    wait(Pattern("1502245600443.png").similar(0.83),5000)
     click(Pattern("1502245600443.png").similar(0.80))
     time.sleep(default_delay + randint(10,5000) / float(1000))  
     current_time = time.strftime("%Y%m%d-%H%M%S")        
@@ -196,7 +196,7 @@ def getname():
     if exists("1502245510769-2.png"):
         click("1502245510769-2.png")
         time.sleep(3)
-        wait(Pattern("enter_official_account.png").similar(0.89),1000)
+        wait(Pattern("enter_official_account.png").similar(0.89),5000)
         click(Pattern("enter_official_account.png").similar(0.89))
         time.sleep(3)
 #        click("1502245510769-2.png")
