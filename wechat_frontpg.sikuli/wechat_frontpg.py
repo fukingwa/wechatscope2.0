@@ -15,7 +15,7 @@ from datetime import datetime
 ### PATH
 
 working_dir = r"E:/Wechat/"
-RScript_dir = r"C:/Program Files/R/R-3.6.1/bin/Rscript"
+RScript_dir = r"C:/Program Files/R/R-4.0.5/bin/Rscript"
 Wechatexe_dir = 'C:/Program Files (x86)/Tencent/WeChat/WeChat.exe'
 
 Notepad_dir = 'C:/Program Files/Notepad++/notepad++.exe'
@@ -30,7 +30,7 @@ def init1(init):
     time.sleep(default_delay + randint(10,5000) / float(1000))    
     if not exists("1502244734523.png"):
         type(Key.ESC)
-    wait("1502244734523.png",1000)
+    wait("1502244734523.png",5000)
     click("1502244734523.png")
     m = find("1502244734523.png")
     time.sleep(default_delay + randint(10,5000) / float(1000))    
@@ -99,7 +99,7 @@ def app_crawler_npr(a,b,getpage=True):
 #        wait(2)
 #        click(Location(m.getX(), m.getY() + 80))  # click the 1st icon ("a")
 #        wait(2)
-    wait("1502245510769.png",1000)
+    wait("1502245510769.png",5000)
     click("1502245510769.png")
     time.sleep(default_delay + randint(10,5000) / float(1000))    
     wechatid_path = Pattern("wechatid.png").similar(0.82)
@@ -110,7 +110,7 @@ def app_crawler_npr(a,b,getpage=True):
         doubleClick(m.getTopRight().below(m.h/2).right(10))
         type("c", KEY_CTRL)
         name = Env.getClipboard().encode('utf-8').strip()
-    time.sleep(2)
+    time.sleep(5)
     wait(Pattern("1502245600443.png").similar(0.83),5000)
     click(Pattern("1502245600443.png").similar(0.80))
     time.sleep(default_delay + randint(10,5000) / float(1000))  
@@ -136,7 +136,7 @@ def app_crawler_npr(a,b,getpage=True):
                 
 def save_page(code, skip=False):
     while True:       
-        wait(Pattern("reload_new.png"),1000)
+        wait(Pattern("reload_new.png"),5000)
         m=Region(App.focusedWindow()).find("reload_new.png")
         click(m)
         time.sleep(2)
