@@ -14,7 +14,7 @@ from datetime import datetime
 
 ### PATH
 
-working_dir = r"E:/Wechat/"
+working_dir = r"C:/Users/fukingwa/Downloads/wechatscope2.0-main/wechatscope2.0-main/"
 RScript_dir = r"C:/Program Files/R/R-4.0.5/bin/Rscript"
 Wechatexe_dir = 'C:/Program Files (x86)/Tencent/WeChat/WeChat.exe'
 
@@ -219,7 +219,8 @@ def get_notified(num_img):
     if App != None: 
         page = Region(App.focusedWindow())
 #        r = Region(page.getX()+310, page.getY(), page.getW()-310, page.getH())
-        r = Region(page.getX()+200, page.getY(), page.getW()-310, page.getH())
+#        r = Region(page.getX()+200, page.getY(), page.getW()-310, page.getH())
+        r = Region(page.getX()+200, page.getY(), page.getW()-610, page.getH())
     else:
         return(None)
     return_value = None    
